@@ -29,6 +29,8 @@ int main()
     //system("./install.sh");
     //system("rm install.sh")
 
+    runScript();
+
     return 0;
 }
 
@@ -44,9 +46,9 @@ int createInstallScript()
 
     //mounting partitions
 
-    outputScript << "mount " << rootPartitionPath << "/mnt" << endl; //mounting root
+    outputScript << "mount " << rootPartitionPath << " /mnt" << endl; //mounting root
     outputScript << "mkdir /mnt/boot /mnt/var /mnt/home" << endl;
-    outputScript << "mkdir " << bootPartitionPath << "/mnt/boot" << endl; //mounting boot
+    outputScript << "mount " << bootPartitionPath << " /mnt/boot" << endl; //mounting boot
 
     outputScript << "pacman -Syy" << endl << "pacstrap /mnt base base-devel linux linux-firmware nano dhcpcd net-tools grub" << endl << "genfstab -U /mnt >> /mnt/etc/fstab" << endl << "cp installRoot.sh /mnt/installRoot.sh" << endl << "chmod +x /mnt/installRoot.sh" << endl << "arch-chroot /mnt ./installRoot.sh" << endl << "rm /mnt/installRoot.sh" << endl << "umount /mnt/boot" << endl << "umount /mnt" << endl;
 
@@ -78,7 +80,7 @@ int runScript()
     }
     else
         cout << "Install cancelled." << endl;
-    system("rm install.sh installRoot.sh");
+    //system("rm install.sh installRoot.sh");
 
     return 0;
 }
